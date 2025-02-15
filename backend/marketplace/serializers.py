@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import (
-    CustomUser,
     VehicleBrand,
     VehicleModel,
     Vehicle,
@@ -13,13 +12,30 @@ from .models import (
     Notification,
     Favorite,
 )
+from django.contrib.auth import get_user_model
 
 
-#  User Serializer
+User = get_user_model()
+
+
+#   User Serializer (For Registration & Authentication)
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=6)
+
     class Meta:
-        model = CustomUser
-        fields = ["id", "username", "email", "phone_number", "last_seen"]
+        model = User  #   Use CustomUser model
+        fields = ["id", "username", "email", "phone_number", "password"]
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            phone_number=validated_data.get(
+                "phone_number", ""
+            ),  #   Prevent missing phone_number field
+            password=validated_data["password"],
+        )
+        return user
 
 
 #  Vehicle Brand Serializer
@@ -70,7 +86,19 @@ class VehicleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vehicle
-        fields = ['id', 'brand_name', 'model_name', 'year', 'price', 'mileage', 'fuel_type', 'transmission', 'color', 'seller', 'images']
+        fields = [
+            "id",
+            "brand_name",
+            "model_name",
+            "year",
+            "price",
+            "mileage",
+            "fuel_type",
+            "transmission",
+            "color",
+            "seller",
+            "images",
+        ]
 
     def get_images(self, obj):
         return [image.image.url for image in obj.images.all()]

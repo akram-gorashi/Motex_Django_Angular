@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third-party apps
     "rest_framework",
-    'drf_yasg',  #Add Swagger
+    "drf_yasg",  # Add Swagger
     "corsheaders",
     # Custom apps
     "marketplace",
@@ -70,9 +70,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
 }
 
 TEMPLATES = [
@@ -104,13 +104,26 @@ DATABASES = {
     }
 }
 
-# ✅ JWT Configuration
+#   JWT Configuration
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # Token valid for 1 day
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Refresh token valid for 7 days
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),  # The token will be prefixed with "Bearer"
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),  # Token valid for 1 day
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # Refresh token valid for 7 days
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),  # The token will be prefixed with "Bearer"
+}
+AUTH_USER_MODEL = "marketplace.CustomUser"  #  Use CustomUser
+SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": False,  #   Disable default session-based login
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": 'JWT Token: Use "Bearer <your-token>"',
+        },
+    },
+    "DEFAULT_MODEL_RENDERING": "example",
 }
 
 # Password validation

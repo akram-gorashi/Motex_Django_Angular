@@ -1,26 +1,28 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (
-    UserViewSet, VehicleBrandViewSet, VehicleModelViewSet, VehicleViewSet, 
-    VehicleImageViewSet, VehicleFeatureViewSet, ChatViewSet, MessageViewSet, 
-    ReviewViewSet, NotificationViewSet, FavoriteViewSet
-)
 
-#  Register ViewSets with Router
+from marketplace.views.brand_views import VehicleBrandViewSet
+from marketplace.views.chat_views import ChatViewSet
+from marketplace.views.favorite_views import FavoriteViewSet
+from marketplace.views.message_views import MessageViewSet
+from marketplace.views.model_views import VehicleModelViewSet
+from marketplace.views.notification_views import NotificationViewSet
+from marketplace.views.review_views import ReviewViewSet
+from marketplace.views.user_views import UserViewSet
+from marketplace.views.vehicle_views import VehicleViewSet
+
+
 router = DefaultRouter()
-router.register(r'users', UserViewSet, basename='user')
-router.register(r'vehicle-brands', VehicleBrandViewSet, basename='vehiclebrand')
-router.register(r'vehicle-models', VehicleModelViewSet, basename='vehiclemodel')
-router.register(r'vehicles', VehicleViewSet, basename='vehicle')
-router.register(r'vehicle-images', VehicleImageViewSet, basename='vehicleimage')
-router.register(r'vehicle-features', VehicleFeatureViewSet, basename='vehiclefeature')
-router.register(r'chats', ChatViewSet, basename='chat')
-router.register(r'messages', MessageViewSet, basename='message')
-router.register(r'reviews', ReviewViewSet, basename='review')
-router.register(r'notifications', NotificationViewSet, basename='notification')
-router.register(r'favorites', FavoriteViewSet, basename='favorite')
+router.register(r'vehicles', VehicleViewSet)
+router.register(r'brands', VehicleBrandViewSet)
+router.register(r'models', VehicleModelViewSet)
+router.register(r'favorites', FavoriteViewSet)
+router.register(r'reviews', ReviewViewSet)
+router.register(r'chats', ChatViewSet)
+router.register(r'messages', MessageViewSet)
+router.register(r'notifications', NotificationViewSet)
+router.register(r'users', UserViewSet)
 
-#  API URL Patterns
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]
