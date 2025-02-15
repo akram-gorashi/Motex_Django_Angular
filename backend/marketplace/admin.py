@@ -66,7 +66,7 @@ class VehicleAdmin(admin.ModelAdmin):
         "price",
         "fuel_type",
         "transmission",
-        "condition",  # ✅ Fix: Ensure condition is a defined choice field
+        "condition",  #   Fix: Ensure condition is a defined choice field
     )
     ordering = ("-created_at",)
 
@@ -102,8 +102,8 @@ class ChatAdmin(admin.ModelAdmin):
 #  Register Message
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ("id", "chat", "sender", "content", "timestamp")  # ✅ Fix: Use 'timestamp' instead of 'sent_at'
-    search_fields = ("chat__id", "sender__username", "content")  # ✅ Fix: Ensure field names are correct
+    list_display = ("id", "chat", "sender", "content", "timestamp")  #   Fix: Use 'timestamp' instead of 'sent_at'
+    search_fields = ("chat__id", "sender__username", "content")  #   Fix: Ensure field names are correct
 
 
 #  Register Review
