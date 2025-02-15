@@ -1,8 +1,10 @@
 Django
 djangorestframework
+drf-yasg
 django-cors-headers
 django-environ
 djangorestframework-simplejwt
 django-redis  # Optional for caching
+django-filter
 Pillow
 psycopg2-binary

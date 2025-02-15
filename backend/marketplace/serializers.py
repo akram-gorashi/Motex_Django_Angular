@@ -63,15 +63,17 @@ class VehicleFeaturesMappingSerializer(serializers.ModelSerializer):
 
 #  Vehicle Serializer
 class VehicleSerializer(serializers.ModelSerializer):
-    seller = UserSerializer()  # Nested user data
-    buyer = UserSerializer(allow_null=True)  # Buyer is optional
-    model = VehicleModelSerializer()
-    images = VehicleImageSerializer(many=True, read_only=True)
-    vehicle_features = VehicleFeaturesMappingSerializer(many=True, read_only=True)
+    seller = UserSerializer()  # Nested User Data
+    model_name = serializers.CharField(source="model.name", read_only=True)
+    brand_name = serializers.CharField(source="model.brand.name", read_only=True)
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Vehicle
-        fields = "__all__"
+        fields = ['id', 'brand_name', 'model_name', 'year', 'price', 'mileage', 'fuel_type', 'transmission', 'color', 'seller', 'images']
+
+    def get_images(self, obj):
+        return [image.image.url for image in obj.images.all()]
 
 
 #  Chat Serializer
