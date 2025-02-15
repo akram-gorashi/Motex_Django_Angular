@@ -1,18 +1,11 @@
 from rest_framework import serializers
-from .models import (
-    VehicleBrand,
-    VehicleModel,
-    Vehicle,
-    VehicleImage,
-    VehicleFeature,
-    VehicleFeaturesMapping,
-    Chat,
-    Message,
-    Review,
-    Notification,
-    Favorite,
-)
 from django.contrib.auth import get_user_model
+
+from marketplace.models.chat import Chat, Message
+from marketplace.models.favorite import Favorite
+from marketplace.models.notification import Notification
+from marketplace.models.review import Review
+from marketplace.models.vehicle import Vehicle, VehicleBrand, VehicleFeature, VehicleFeaturesMapping, VehicleImage, VehicleModel
 
 
 User = get_user_model()

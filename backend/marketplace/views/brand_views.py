@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions
 from marketplace.models import VehicleBrand
 from marketplace.serializers import VehicleBrandSerializer
 
-# ✅ ViewSet for Vehicle Brands
+#   ViewSet for Vehicle Brands
 class VehicleBrandViewSet(viewsets.ModelViewSet):
     """
     VehicleBrandViewSet allows:

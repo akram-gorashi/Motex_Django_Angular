@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions
 from marketplace.models import Favorite
 from marketplace.serializers import FavoriteSerializer
 
-# ✅ ViewSet for Managing Favorites
+#   ViewSet for Managing Favorites
 class FavoriteViewSet(viewsets.ModelViewSet):
     """
     FavoriteViewSet allows users to:
@@ -15,9 +15,9 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]  # Requires authentication
 
     def get_queryset(self):
-        """✅ Return only the authenticated user's favorite vehicles"""
+        """  Return only the authenticated user's favorite vehicles"""
         return Favorite.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        """✅ Auto-assigns the user when adding a favorite"""
+        """  Auto-assigns the user when adding a favorite"""
         serializer.save(user=self.request.user)
