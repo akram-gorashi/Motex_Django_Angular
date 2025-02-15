@@ -45,7 +45,7 @@ lib64/
 parts/
 sdist/
 var/
-vehicle_images/
+backend/vehicle_images/
 *.egg-info/
 .installed.cfg
 *.egg
