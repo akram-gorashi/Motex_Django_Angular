@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-# ✅ Custom User Model (Extends Django's AbstractUser)
+#  Custom User Model (Extends Django's AbstractUser)
 # - Represents sellers and buyers in the marketplace.
 # - Users can sell vehicles, buy vehicles, write reviews, and receive notifications.
 class CustomUser(AbstractUser):
@@ -22,7 +22,7 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-# ✅ VehicleBrand Model (Previously "Make")
+#  VehicleBrand Model (Previously "Make")
 # - Represents a car manufacturer (e.g., Toyota, BMW, Ford).
 # - A single brand can have multiple vehicle models.
 class VehicleBrand(models.Model):
@@ -32,7 +32,7 @@ class VehicleBrand(models.Model):
         return self.name
 
 
-# ✅ VehicleModel Model (Previously "Model")
+#  VehicleModel Model (Previously "Model")
 # - Represents a specific car model belonging to a brand.
 # - A single brand (VehicleBrand) can have multiple models.
 class VehicleModel(models.Model):
@@ -45,7 +45,7 @@ class VehicleModel(models.Model):
         return f"{self.brand.name} {self.name}"
 
 
-# ✅ Vehicle Model
+#  Vehicle Model
 # - Each vehicle is linked to a seller (CustomUser).
 # - A vehicle may have a buyer if it has been sold.
 # - A vehicle belongs to a specific model (which in turn belongs to a brand).
@@ -120,7 +120,7 @@ class Vehicle(models.Model):
         return f"{self.model.brand.name} {self.model.name} ({self.year})"
 
 
-# ✅ Vehicle Images
+#  Vehicle Images
 # - Each vehicle can have multiple images.
 class VehicleImage(models.Model):
     vehicle = models.ForeignKey(
@@ -132,7 +132,7 @@ class VehicleImage(models.Model):
         return f"Image for {self.vehicle.model.brand.name} {self.vehicle.model.name}"
 
 
-# ✅ Vehicle Features
+#  Vehicle Features
 # - Represents features such as "Sunroof," "Bluetooth," "Leather Seats".
 class VehicleFeature(models.Model):
     name = models.CharField(max_length=100)
@@ -141,7 +141,7 @@ class VehicleFeature(models.Model):
         return self.name
 
 
-# ✅ Many-to-Many Relationship Between Vehicle & Features
+#  Many-to-Many Relationship Between Vehicle & Features
 class VehicleFeaturesMapping(models.Model):
     vehicle = models.ForeignKey(
         Vehicle, on_delete=models.CASCADE, related_name="vehicle_features"
@@ -158,7 +158,7 @@ class VehicleFeaturesMapping(models.Model):
         return f"{self.vehicle.model.brand.name} {self.vehicle.model.name} - {self.feature.name}"
 
 
-# ✅ Favorite Model
+#  Favorite Model
 # - Allows users to favorite vehicles.
 # - A user can favorite multiple vehicles.
 # - A vehicle can be favorited by multiple users.
@@ -183,7 +183,7 @@ class Favorite(models.Model):
         return f"{self.user.username} favorited {self.vehicle.model.brand.name} {self.vehicle.model.name}"
 
 
-# ✅ Chat Model
+#  Chat Model
 # - Represents a chat conversation between a buyer and seller about a vehicle.
 class Chat(models.Model):
     buyer = models.ForeignKey(
@@ -200,7 +200,7 @@ class Chat(models.Model):
         return f"Chat between {self.buyer.username} and {self.seller.username} for {self.vehicle.model.brand.name} {self.vehicle.model.name}"
 
 
-# ✅ Message Model
+#  Message Model
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="messages")
     sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -211,7 +211,7 @@ class Message(models.Model):
         return f"Message from {self.sender.username} in chat {self.chat.id}"
 
 
-# ✅ Review Model
+#  Review Model
 # - A review is written by one user (Reviewer) for another user (Reviewed User) regarding a specific vehicle.
 class Review(models.Model):
     reviewer = models.ForeignKey(
@@ -236,7 +236,7 @@ class Review(models.Model):
         return f"Review by {self.reviewer.username} for {self.reviewed_user.username} on {self.vehicle.model.brand.name} {self.vehicle.model.name}"
 
 
-# ✅ Notification Model
+#  Notification Model
 # - Stores notifications for users.
 class Notification(models.Model):
     class NotificationType(models.TextChoices):
